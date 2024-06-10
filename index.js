@@ -10,14 +10,14 @@
 // module dependencies
 var path = require('path'),
     through = require('through2'),
-    gutil = require('gulp-util'),
+    error = require('plugin-error'),
     Config = require('cordova-config');
 
 // export the module
 module.exports = function(version, versionCodes) {
 
     var project;
-    
+
     // Make it a default object if it is not provided
     versionCodes = versionCodes || {};
 
@@ -35,12 +35,12 @@ module.exports = function(version, versionCodes) {
 
 			// Sets the version
             config.setVersion(version);
-            
+
             if(versionCodes.androidVersionCode) {
                 // Set the android version code if provided
                 config.setAndroidVersionCode(versionCodes.androidVersionCode);
             }
-            
+
             if(versionCodes.iosBundleVersion) {
                 // Set the android version code if provided
                 config.setIOSBundleVersion(versionCodes.iosBundleVersion);
@@ -54,7 +54,7 @@ module.exports = function(version, versionCodes) {
         }
         catch(err) {
 			// Oh no, something happened!
-            cb(new gutil.PluginError('gulp-cordova-version', err.message));
+            cb(new error('gulp-cordova-version', err.message));
         }
     });
 };
